@@ -3,13 +3,15 @@ import React from 'react'
 import { 
 	SafeAreaView,
 	StyleSheet,
+	TouchableOpacity,
 	Text,
 	Image,
+	Dimensions,
 } from 'react-native'
 
 import wateringImg from '../../assets/watering.png'
 
-import Button from '../../components/Button'
+import { Feather } from '@expo/vector-icons'
 
 import colors from '../../styles/colors'
 
@@ -23,17 +25,25 @@ const index = () => {
 			</Text>
 			<Image
 				style={styles.image}
+				resizeMode='contain'
 				source={wateringImg}
 			/>
 			<Text style={styles.subtitle}>
 				Não esqueça mais de regar suas plantas. Nós cuidamos de lembrar você sempre que precisar.
 			</Text>
-			<Button
-				title=">"
-				onPress={() => {
+			<TouchableOpacity 
+				style={styles.button}
+				activeOpacity={0.7}
+				onPress={() => [
 
-				}}
-			/>
+				]}>
+				<Text>
+					<Feather 
+						style={styles.buttonIcon}
+						name='chevron-right'
+					/>
+				</Text>
+			</TouchableOpacity>
 		</SafeAreaView>
 	)
 }
@@ -41,7 +51,7 @@ const index = () => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		justifyContent: 'space-between',
+		justifyContent: 'space-around',
 		alignItems: 'center',
 	},
 	title:{
@@ -52,14 +62,26 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 	},
 	image: {
-		height: 284,
-		width: 292,
+		width: Dimensions.get('window').width * 0.7,
 	},
 	subtitle: {
 		fontSize: 17,
 		color: colors.heading,
 		textAlign: 'center',
 		paddingHorizontal: 20,
+	},
+	button: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 16,
+		backgroundColor: colors.green,
+		height: 56,
+		width: 56,
+		marginBottom: 10,
+	},
+	buttonIcon: {
+		color: colors.white,
+		fontSize: 24,
 	},
 })
 
