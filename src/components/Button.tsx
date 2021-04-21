@@ -10,17 +10,17 @@ import {
 import colors from '../styles/colors'
 
 interface ButtonProps extends TouchableOpacityProps{
-	title: string;
+	label: string;
 }
 
-export default ({title, ...TouchableOpacityProps } : ButtonProps) => {
+export default ({label, ...TouchableOpacityProps } : ButtonProps) => {
 	return(
 		<TouchableOpacity 
 			style={styles.container}
 			activeOpacity={0.7}
 			{...TouchableOpacityProps}>
-			<Text style={styles.buttonText}>
-				{title}
+			<Text style={styles.label}>
+				{label}
 			</Text>
 		</TouchableOpacity>
 	)
@@ -30,13 +30,13 @@ const styles = StyleSheet.create({
 	container: {
 		justifyContent: 'center',
 		alignItems: 'center',
-		borderRadius: 16,
 		backgroundColor: colors.green,
+		paddingHorizontal: 10,
+		borderRadius: 16,
 		height: 56,
-		width: 56,
 		marginBottom: 10,
 	},
-	buttonText: {
+	label: {
 		color: colors.white,
 		fontSize: 24,
 	},
