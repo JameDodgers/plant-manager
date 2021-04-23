@@ -17,6 +17,7 @@ import { getBottomSpace } from 'react-native-iphone-x-helper'
 
 import { SvgFromUri } from 'react-native-svg'
 
+import DateTimePicker, { Event } from '@react-native-community/datetimepicker'
 
 import waterDropImg from '../../assets/waterdrop.png'
 import Button from '../../components/Button'
@@ -54,6 +55,28 @@ interface Params {
 const index = ({ route } : screenProps) => {
   // const route = useRoute();
   const { plant } = route.params as Params;
+  const [selectedDateTime, setSelectedDateTime] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(Platform.OS === 'ios');
+
+  const handleChangeTime = (
+    _: Event, 
+    dateTime: Date | undefined) => {
+      if(Platform.OS === 'android'){
+        setShowDatePicker(showDatePicker => !showDatePicker);
+      }
+
+      if(dateTime && isBefore(dateTime, new Date())){
+        setSelectedDateTime(new Date());
+        return Alert.alert('Escolha uma hora no futuro! ⏰')
+      }
+
+      if(dateTime)
+        setSelectedDateTime(dateTime);
+  }
+
+  const openDateTimePickerOnAndroid = () => {
+    setShowDatePicker(!showDatePicker)
+  }
 
   return (
     <View style={styles.container}>
@@ -83,6 +106,25 @@ const index = ({ route } : screenProps) => {
         <Text style={styles.alertLabel}>
           Escolha o melhor horário para ser lembrado:
         </Text>
+        {
+          showDatePicker &&
+            <DateTimePicker
+              value={selectedDateTime}
+              mode="time"
+              display="spinner"
+              onChange={handleChangeTime}
+            />
+        }
+        {
+          Platform.OS === 'android' &&
+            <TouchableOpacity
+              style={styles.dateTimePickerButton}
+              onPress={openDateTimePickerOnAndroid}>
+              <Text style={styles.dateTimePickerText}>
+                {`Mudar ${format(selectedDateTime, 'hh:mm a')}`}
+              </Text>
+            </TouchableOpacity>
+        }
         <Button
           label={"Cadastrar planta"}
         />
@@ -153,6 +195,16 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginBottom: 5,
   },
+  dateTimePickerButton: {
+    width: '100%',
+    alignItems: 'center',
+    paddingVertical: 40,
+  },
+  dateTimePickerText: {
+    color: colors.heading,
+    fontSize: 24,
+    fontFamily: fonts.text
+  }
 })
 
 export default index
