@@ -31,8 +31,10 @@ import {
   ParamListBase 
 } from '@react-navigation/native'
 
-import { PlantProps } from '../../libs/storage'
-
+import { 
+  PlantProps, 
+  savePlant 
+} from '../../libs/storage'
 
 interface screenProps {
   route: RouteProp<ParamListBase, string>;
@@ -66,6 +68,17 @@ const index = ({ route } : screenProps) => {
 
   const openDateTimePickerOnAndroid = () => {
     setShowDatePicker(!showDatePicker)
+  }
+
+  const handleSave = async () => {
+    try {
+      await savePlant({
+        ...plant,
+        dateTimeNotification: selectedDateTime
+      })
+    } catch(e) {
+      Alert.alert('Não foi possível salvar. 😥')
+    }
   }
 
   return (
@@ -117,6 +130,7 @@ const index = ({ route } : screenProps) => {
         }
         <Button
           label={"Cadastrar planta"}
+          onPress={handleSave}
         />
       </View>
     </View>

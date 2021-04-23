@@ -34,7 +34,11 @@ const index = ({ navigation } : screenProps) => {
     if(!name)
       return Alert.alert('Me diz como chamar você 😥');
     
-    await AsyncStorage.setItem('@plantManager:user', name);
+      try {
+        await AsyncStorage.setItem('@plantManager:user', name);
+      } catch {
+        Alert.alert('Não foi possível salvar o seu nome. 😥')
+      }
 
     navigation.navigate('Confirmation');
   }
