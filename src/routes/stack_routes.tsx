@@ -6,6 +6,7 @@ import Welcome from '../screens/Welcome'
 import UserIdentification from '../screens/UserIdentification'
 import Confirmation from '../screens/Confirmation'
 import PlantSelect from '../screens/PlantSelect'
+import PlantSave from '../screens/PlantSave'
 
 import colors from '../styles/colors'
 
@@ -34,6 +35,10 @@ const index : React.FC = ({}) => (
       <StackRoutes.Screen
         name="PlantSelect"
         component={PlantSelect} 
+      />
+      <StackRoutes.Screen
+        name="PlantSave"
+        component={PlantSave} 
       />
   </StackRoutes.Navigator>
 )

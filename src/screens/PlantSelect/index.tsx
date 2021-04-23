@@ -8,7 +8,11 @@ import {
   ActivityIndicator,
 } from 'react-native'
 
-import { NavigationProp, ParamListBase } from '@react-navigation/native'
+import { 
+  // useNavigation, 
+  NavigationProp, 
+  ParamListBase 
+} from '@react-navigation/native'
 
 import api from '../../services/axios'
 
@@ -45,10 +49,7 @@ interface PlantProps {
   }
 }
 
-const index = ({ 
-  name, 
-  navigation 
-} : screenProps) => { 
+const index = ({ navigation } : screenProps) => { 
   const [environments, setEnvironments] = useState<EnvironmentProps[]>([]);
   const [plants, setPlants] = useState<PlantProps[]>([]);
   const [filteredPlants, setFilteredPlants] = useState<PlantProps[]>([]);
@@ -118,6 +119,10 @@ const index = ({
     fetchPlants();
   }
 
+  const handlePlantSelect = (plant: PlantProps) => {
+    navigation.navigate('PlantSave', { plant });
+  }
+
   if(loading)
     return <Load />
     
@@ -155,6 +160,10 @@ const index = ({
           renderItem={({ item }) => (
             <PlantCardPrimary
               data={item}
+              onPress={() => {
+                handlePlantSelect(item)
+                // navigation.navigate('PlantSave', { plant: item }); // Alternative way
+              }}
             />
           )}
           showsVerticalScrollIndicator={false}
