@@ -19,12 +19,13 @@ import api from '../../services/axios'
 import Header from '../../components/Header'
 
 import EnvironmentButton from '../../components/EnvironmentButton'
-
+import PlantCardPrimary from '../../components/PlantCardPrimary'
 import Load from '../../components/Load'
 
 import colors from '../../styles/colors'
 import fonts from '../../styles/fonts'
-import PlantCardPrimary from '../../components/PlantCardPrimary'
+
+import { PlantProps } from '../../libs/storage'
 
 interface screenProps {
   name: string
@@ -34,19 +35,6 @@ interface screenProps {
 interface EnvironmentProps {
   key: string;
   title: string;
-}
-
-interface PlantProps {
-  id: string;
-  name: string;
-  about: string;
-  water_tips: string;
-  photo: string;
-  environments: [string];
-  frequency: {
-    times: number;
-    repeat_every: string;
-  }
 }
 
 const index = ({ navigation } : screenProps) => { 

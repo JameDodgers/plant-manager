@@ -30,7 +30,8 @@ import {
   RouteProp, 
   ParamListBase 
 } from '@react-navigation/native'
-import { color } from 'react-native-reanimated'
+
+import { PlantProps } from '../../libs/storage'
 
 
 interface screenProps {
@@ -38,18 +39,7 @@ interface screenProps {
 }
 
 interface Params {
-  plant: {
-    id: string;
-    name: string;
-    about: string;
-    water_tips: string;
-    photo: string;
-    environments: [string];
-    frequency: {
-      times: number;
-      repeat_every: string;
-    }
-  }
+  plant: PlantProps
 }
 
 const index = ({ route } : screenProps) => {
