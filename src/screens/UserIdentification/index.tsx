@@ -9,9 +9,12 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from 'react-native'
 
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
+
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import Button from '../../components/Button'
 
@@ -27,6 +30,15 @@ const index = ({ navigation } : screenProps) => {
   const [isFilled, setFilled] = useState(false)
   const [name, setName] = useState<string>()
   
+  const handleSubmit = async () => {
+    if(!name)
+      return Alert.alert('Me diz como chamar você 😥');
+    
+    await AsyncStorage.setItem('@plantManager:user', name);
+
+    navigation.navigate('Confirmation');
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView 
@@ -68,9 +80,7 @@ const index = ({ navigation } : screenProps) => {
                 <View style={styles.footer}>
                   <Button
                     label="Confirmar"
-                    onPress={() => {
-                      navigation.navigate('Confirmation')
-                    }}
+                    onPress={() => handleSubmit()}
                   />
                 </View>
               </View>

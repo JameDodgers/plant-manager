@@ -124,9 +124,7 @@ const index = ({
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Header 
-          name={name}
-        />
+        <Header />
         <Text style={styles.title}>
           Em qual ambiente
         </Text>
@@ -137,7 +135,7 @@ const index = ({
       <View>
         <FlatList
           data={environments}
-          keyExtractor={item => item.key}
+          keyExtractor={item => String(item.key)}
           renderItem={({ item }) => (
             <EnvironmentButton 
               title={item.title}
@@ -153,7 +151,7 @@ const index = ({
       <View style={styles.plants}>
         <FlatList
           data={filteredPlants}
-          keyExtractor={item => item.id}
+          keyExtractor={item => String(item.id)}
           renderItem={({ item }) => (
             <PlantCardPrimary
               data={item}
