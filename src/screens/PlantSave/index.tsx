@@ -28,6 +28,7 @@ import fonts from '../../styles/fonts'
 import { 
   // useRoute, // Alternative way to get routes
   RouteProp, 
+  NavigationProp,
   ParamListBase 
 } from '@react-navigation/native'
 
@@ -38,13 +39,14 @@ import {
 
 interface screenProps {
   route: RouteProp<ParamListBase, string>;
+  navigation: NavigationProp<ParamListBase>;
 }
 
 interface Params {
   plant: PlantProps
 }
 
-const index = ({ route } : screenProps) => {
+const index = ({ route, navigation } : screenProps) => {
   // const route = useRoute();
   const { plant } = route.params as Params;
   const [selectedDateTime, setSelectedDateTime] = useState(new Date());
@@ -76,6 +78,14 @@ const index = ({ route } : screenProps) => {
         ...plant,
         dateTimeNotification: selectedDateTime
       })
+
+      navigation.navigate('Confirmation', {
+        title: 'Tudo certo',
+        subtitle: 'Fique tranquilo que sempre vamos lembrar você de cuidar da sua plantinha com muito cuidado.',
+        buttonTitle: 'Muito obrigado :D',
+        icon: 'hug',
+        nextScreen: 'MyPlants'
+      });
     } catch(e) {
       Alert.alert('Não foi possível salvar. 😥')
     }

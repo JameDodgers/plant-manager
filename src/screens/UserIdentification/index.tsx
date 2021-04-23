@@ -40,7 +40,13 @@ const index = ({ navigation } : screenProps) => {
         Alert.alert('Não foi possível salvar o seu nome. 😥')
       }
 
-    navigation.navigate('Confirmation');
+    navigation.navigate('Confirmation', {
+      title: 'Prontinho',
+      subtitle: 'Agora vamos começar a cuidar das sua plantinhas com muito cuidado.',
+      buttonTitle: 'Começar',
+      icon: 'smile',
+      nextScreen: 'PlantSelect'
+    });
   }
 
   return (
