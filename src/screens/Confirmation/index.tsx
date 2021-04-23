@@ -33,6 +33,9 @@ const index = ({ navigation } : screenProps) => {
         <View style={styles.footer}>
           <Button 
             label="Começar"
+            onPress={() => {
+              navigation.navigate('PlantSelect')
+            }}
           />
         </View>
       </View>
