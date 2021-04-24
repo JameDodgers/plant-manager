@@ -1,6 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+import * as Notifications from 'expo-notifications'
+
 import { differenceInMinutes, format } from 'date-fns';
+
+import { mod } from '../util/functions';
 
 export interface PlantProps {
   id: string;
@@ -20,17 +24,48 @@ export interface PlantProps {
 export interface StoragePlantProps {
   [id: string]: {
     data: PlantProps;
+    notificationId: string;
   }
 }
 
 export async function savePlant(plant : PlantProps) : Promise<void> {
   try {
+    const nextTime = new Date(plant.dateTimeNotification);
+    const now = new Date();
+
+    const { times, repeat_every } = plant.frequency
+
+    if(repeat_every === 'week') {
+      const interval = Math.trunc(7 / times);
+      nextTime.setDate(now.getDate() + interval);
+    }
+
+    const seconds = Math.abs(
+      (Math.ceil(now.getTime() - nextTime.getTime())) / 1000)
+
+    const notificationId = await Notifications.scheduleNotificationAsync({
+      content: {
+        title: 'Heeey, 🌿',
+        body: `Está na hora de cuidar da sua planta ${plant.name}`,
+        sound: true,
+        priority: Notifications.AndroidNotificationPriority.HIGH,
+        data: {
+          plant
+        },
+      },
+      trigger: {
+        seconds: seconds < 60 ? 60 : seconds,
+        repeats: true,
+      }
+    })
+
     const data = await AsyncStorage.getItem('@plantManager:plants');
     const oldPlants = data ? (JSON.parse(data) as StoragePlantProps) : {};
 
     const newPlant = {
       [plant.id]: {
-        data: plant
+        data: plant,
+        notificationId 
       }
     }
 
@@ -42,10 +77,6 @@ export async function savePlant(plant : PlantProps) : Promise<void> {
   }catch(e){
     throw new Error(e);
   }
-}
-
-const mod = (n : number, m : number) => {
-  return ((n % m) + m) % m;
 }
 
 export async function loadPlants() : Promise<PlantProps[]> {
@@ -75,8 +106,8 @@ export async function loadPlants() : Promise<PlantProps[]> {
       const aTimes = a.frequency.times
       const bTimes = b.frequency.times
 
-      const aInterval = aPeriod / aTimes
-      const bInterval = bPeriod / bTimes
+      const aInterval = Math.trunc(aPeriod / aTimes)
+      const bInterval = Math.trunc(bPeriod / bTimes)
 
       const aAbsoluteTime = mod(aMinutesSinceSave, Math.floor((aInterval * 1440)))
       const bAbsoluteTime = mod(bMinutesSinceSave, Math.floor((bInterval * 1440)))
@@ -93,6 +124,8 @@ export async function loadPlants() : Promise<PlantProps[]> {
 export async function removePlant(id: string) : Promise<void> {
   const data = await AsyncStorage.getItem('@plantManager:plants');
   const plants = data ? (JSON.parse(data) as StoragePlantProps) : {}
+
+  await Notifications.cancelScheduledNotificationAsync(plants[id].notificationId)
 
   delete plants[id];
 
