@@ -5,12 +5,14 @@ import {
   Text,
   Image,
   FlatList,
+  Alert,
 } from 'react-native'
 
-import { loadPlants, PlantProps } from '../../libs/storage'
+import { loadPlants, PlantProps, removePlant } from '../../libs/storage'
 
 import Header from '../../components/Header'
 import PlantCardSecondary from '../../components/PlantCardSecondary'
+import Load from '../../components/Load'
 
 import waterDropImg from '../../assets/waterdrop.png'
 
@@ -51,6 +53,32 @@ const index = () => {
     }
   }, [])
 
+  const handleRemove = (plant : PlantProps) => {
+    Alert.alert('Remover', `Desejaa remover a sua planta ${plant.name}?`, [
+      {
+        text: 'Não 🙏',
+        style: 'cancel'
+      },
+      {
+        text: 'Sim 😥',
+        onPress: async () => {
+          try {
+            await removePlant(plant.id)
+            
+            setMyPlants((myPlants) => 
+              myPlants.filter(item => item.id != plant.id)
+            );
+          } catch(e) {
+            Alert.alert('Não foi possível remover! 😥')
+          }
+        }
+      }
+    ])
+  }
+
+  if(loading)
+    return <Load />
+
   return (
     <View style={styles.container}>
       <Header />
@@ -73,6 +101,9 @@ const index = () => {
           renderItem={({item}) => (
             <PlantCardSecondary
               data={item}
+              handleRemove={() => {
+                handleRemove(item)
+              }}
             />
           )}
           showsVerticalScrollIndicator={false}

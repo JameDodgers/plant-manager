@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { differenceInDays, differenceInMinutes, format } from 'date-fns';
+
+import { differenceInMinutes, format } from 'date-fns';
 
 export interface PlantProps {
   id: string;
@@ -16,7 +17,7 @@ export interface PlantProps {
   hour: string;
 }
 
-interface StoragePlantProps {
+export interface StoragePlantProps {
   [id: string]: {
     data: PlantProps;
   }
@@ -80,8 +81,6 @@ export async function loadPlants() : Promise<PlantProps[]> {
       const aAbsoluteTime = mod(aMinutesSinceSave, Math.floor((aInterval * 1440)))
       const bAbsoluteTime = mod(bMinutesSinceSave, Math.floor((bInterval * 1440)))
 
-      // const aMinutesAbsolute = (new Date(a.dateTimeNotification).getHours() * 60 + new Date(a.dateTimeNotification).getMinutes()) / 1000
-      // const bMinutesAbsolute = (new Date(b.dateTimeNotification).getHours() * 60 + new Date(b.dateTimeNotification).getMinutes()) / 1000
       return (aAbsoluteTime - bAbsoluteTime)
     })
 
@@ -89,4 +88,15 @@ export async function loadPlants() : Promise<PlantProps[]> {
   }catch(e){
     throw new Error(e);
   }
+}
+
+export async function removePlant(id: string) : Promise<void> {
+  const data = await AsyncStorage.getItem('@plantManager:plants');
+  const plants = data ? (JSON.parse(data) as StoragePlantProps) : {}
+
+  delete plants[id];
+
+  await AsyncStorage.setItem(
+    '@plantManager:plants',
+    JSON.stringify(plants));
 }
