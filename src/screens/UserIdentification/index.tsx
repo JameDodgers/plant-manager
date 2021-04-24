@@ -36,17 +36,17 @@ const index = ({ navigation } : screenProps) => {
     
       try {
         await AsyncStorage.setItem('@plantManager:user', name);
+
+        navigation.navigate('Confirmation', {
+          title: 'Prontinho',
+          subtitle: 'Agora vamos começar a cuidar das sua plantinhas com muito cuidado.',
+          buttonTitle: 'Começar',
+          icon: 'smile',
+          nextScreen: 'PlantSelect'
+        });
       } catch {
         Alert.alert('Não foi possível salvar o seu nome. 😥')
       }
-
-    navigation.navigate('Confirmation', {
-      title: 'Prontinho',
-      subtitle: 'Agora vamos começar a cuidar das sua plantinhas com muito cuidado.',
-      buttonTitle: 'Começar',
-      icon: 'smile',
-      nextScreen: 'PlantSelect'
-    });
   }
 
   return (

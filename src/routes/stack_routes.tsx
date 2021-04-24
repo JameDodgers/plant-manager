@@ -2,10 +2,11 @@ import React from 'react'
 
 import { createStackNavigator } from '@react-navigation/stack'
 
+import AuthRoutes from './tab_routes'
+
 import Welcome from '../screens/Welcome'
 import UserIdentification from '../screens/UserIdentification'
 import Confirmation from '../screens/Confirmation'
-import PlantSelect from '../screens/PlantSelect'
 import PlantSave from '../screens/PlantSave'
 import MyPlants from '../screens/MyPlants'
 
@@ -35,7 +36,7 @@ const index : React.FC = ({}) => (
       />
       <StackRoutes.Screen
         name="PlantSelect"
-        component={PlantSelect} 
+        component={AuthRoutes} 
       />
       <StackRoutes.Screen
         name="PlantSave"
@@ -43,7 +44,7 @@ const index : React.FC = ({}) => (
       />
       <StackRoutes.Screen
         name="MyPlants"
-        component={MyPlants} 
+        component={AuthRoutes} 
       />
   </StackRoutes.Navigator>
 )
