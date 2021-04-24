@@ -109,8 +109,8 @@ export async function loadPlants() : Promise<PlantProps[]> {
       const aInterval = Math.trunc(aPeriod / aTimes)
       const bInterval = Math.trunc(bPeriod / bTimes)
 
-      const aAbsoluteTime = mod(aMinutesSinceSave, Math.floor((aInterval * 1440)))
-      const bAbsoluteTime = mod(bMinutesSinceSave, Math.floor((bInterval * 1440)))
+      const aAbsoluteTime = mod(aMinutesSinceSave, (aInterval * 1440))
+      const bAbsoluteTime = mod(bMinutesSinceSave, (bInterval * 1440))
 
       return (aAbsoluteTime - bAbsoluteTime)
     })
