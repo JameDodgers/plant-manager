@@ -2,18 +2,14 @@ import React, { useState } from 'react'
 
 import {
   Alert,
-  StyleSheet,
   Text,
   View,
   Image,
-  ScrollView,
   Platform,
   TouchableOpacity,
 } from 'react-native'
 
-import { format, isBefore } from 'date-fns'
-
-import { getBottomSpace } from 'react-native-iphone-x-helper'
+import { addDays, format, isBefore } from 'date-fns'
 
 import { SvgFromUri } from 'react-native-svg'
 
@@ -22,20 +18,19 @@ import DateTimePicker, { Event } from '@react-native-community/datetimepicker'
 import waterDropImg from '../../assets/waterdrop.png'
 import Button from '../../components/Button'
 
-import colors from '../../styles/colors'
-import fonts from '../../styles/fonts'
-
 import { 
   // useRoute, // Alternative way to get routes
   RouteProp, 
   NavigationProp,
-  ParamListBase 
+  ParamListBase, 
 } from '@react-navigation/native'
 
 import { 
   PlantProps, 
   savePlant 
 } from '../../libs/storage'
+
+import styles from './styles'
 
 interface screenProps {
   route: RouteProp<ParamListBase, string>;
@@ -47,7 +42,7 @@ interface Params {
 }
 
 const index = ({ route, navigation } : screenProps) => {
-  // const route = useRoute();
+  // const routes = useRoute()
   const { plant } = route.params as Params;
   const [selectedDateTime, setSelectedDateTime] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(Platform.OS === 'ios');
@@ -58,15 +53,17 @@ const index = ({ route, navigation } : screenProps) => {
       if(Platform.OS === 'android'){
         setShowDatePicker(showDatePicker => !showDatePicker);
       }
+      
+      if(dateTime) {
+        let date = dateTime
 
-      if(dateTime && isBefore(dateTime, new Date())){
-        setSelectedDateTime(new Date());
-        return Alert.alert('Escolha uma hora no futuro! ⏰')
+        if(isBefore(dateTime, new Date())) {
+          date = addDays(date, 1)
+        }
+
+        setSelectedDateTime(date)
       }
-
-      if(dateTime)
-        setSelectedDateTime(dateTime);
-  }
+    }
 
   const openDateTimePickerOnAndroid = () => {
     setShowDatePicker(!showDatePicker)
@@ -146,79 +143,5 @@ const index = ({ route, navigation } : screenProps) => {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-    backgroundColor: colors.shape
-  },
-  plantInfo: {
-    flex: 1,
-    paddingHorizontal: 30,
-    paddingVertical: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: colors.shape
-  },
-  plantName: {
-    fontFamily: fonts.heading,
-    fontSize: 24,
-    color: colors.heading,
-    marginTop: 15,
-  },
-  plantAbout: {
-    textAlign: 'center',
-    fontFamily: fonts.text,
-    color: colors.heading,
-    fontSize: 17,
-    marginTop: 10,
-  },
-  controller: {
-    backgroundColor: colors.white,
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: getBottomSpace() || 20,
-  },
-  tipContainer: {
-    position: 'relative',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: colors.blue_light,
-    padding: 20,
-    borderRadius: 20,
-    bottom: 60,
-  },
-  tipImage: {
-    width: 56,
-    height: 56,
-  },
-  tipText: {
-    flex: 1,
-    marginLeft: 20,
-    fontFamily: fonts.text,
-    color: colors.blue,
-    fontSize: 17,
-    textAlign: 'justify'
-  },
-  alertLabel: {
-    textAlign: 'center',
-    fontFamily: fonts.complement,
-    color: colors.heading,
-    fontSize: 12,
-    marginBottom: 5,
-  },
-  dateTimePickerButton: {
-    width: '100%',
-    alignItems: 'center',
-    paddingVertical: 40,
-  },
-  dateTimePickerText: {
-    color: colors.heading,
-    fontSize: 24,
-    fontFamily: fonts.text
-  }
-})
 
 export default index
