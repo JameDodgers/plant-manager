@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
 import {
-  StyleSheet, 
   View, 
   Text,
   FlatList,
@@ -23,9 +22,10 @@ import PlantCardPrimary from '../../components/PlantCardPrimary'
 import Load from '../../components/Load'
 
 import colors from '../../styles/colors'
-import fonts from '../../styles/fonts'
 
 import { PlantProps } from '../../libs/storage'
+
+import styles from './styles'
 
 interface screenProps {
   name: string
@@ -170,41 +170,5 @@ const index = ({ navigation } : screenProps) => {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  header: {
-    paddingHorizontal: 30,
-  },
-  title: {
-    fontSize: 17,
-    color: colors.heading,
-    fontFamily: fonts.heading,
-    lineHeight: 20,
-    marginTop: 15,
-  },
-  subtitle: {
-    fontFamily: fonts.text,
-    fontSize: 17,
-    lineHeight: 20,
-    color: colors.heading
-  },
-  environmentList: {
-    height: 40,
-    justifyContent: 'center',
-    paddingBottom: 5,
-    marginLeft: 32,
-    marginVertical: 32,
-    paddingRight: 32
-  },
-  plants: {
-    flex: 1,
-    paddingHorizontal: 32,
-    justifyContent: 'center'
-  }
-})
 
 export default index
