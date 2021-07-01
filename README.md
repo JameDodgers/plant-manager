@@ -11,16 +11,8 @@ Plant Manager é um aplicativo que permite você cadastrar suas plantas e te not
 
 ## Capturas de Tela
 
-![alt text](https://github.com/[JameDodgers]/[plant-manager]/blob/[readme-assets]/Screenshot_1625154788.png?raw=true)
+![alt text](https://github.com/JameDodgers/plant-manager/blob/readme-assets/Screenshot_1625154816.png?raw=true)
 
-![alt text](https://github.com/[JameDodgers]/[plant-manager]/blob/[readme-assets]/Screenshot_1625154799.png?raw=true)
+![alt text](https://github.com/JameDodgers/plant-manager/blob/readme-assets/Screenshot_1625155033.png?raw=true)
 
-![alt text](https://github.com/[JameDodgers]/[plant-manager]/blob/[readme-assets]/Screenshot_1625154806.png?raw=true)
-
-![alt text](https://github.com/[JameDodgers]/[plant-manager]/blob/[readme-assets]/Screenshot_1625154816.png?raw=true)
-
-![alt text](https://github.com/[JameDodgers]/[plant-manager]/blob/[readme-assets]/Screenshot_1625155025.png?raw=true)
-
-![alt text](https://github.com/[JameDodgers]/[plant-manager]/blob/[readme-assets]/Screenshot_1625155033.png?raw=true)
-
-![alt text](https://github.com/[JameDodgers]/[plant-manager]/blob/[readme-assets]/Screenshot_1625155040.png?raw=true)
+![alt text](https://github.com/JameDodgers/plant-manager/blob/readme-assets/Screenshot_1625155040.png?raw=true)
